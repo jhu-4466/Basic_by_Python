@@ -44,7 +44,7 @@ def prefix_reversal_general(arr: list):
 
         # try to make a greedy search 
         # for more values such that are in the correct position
-        while arr[right - 2] == arr[right - 1] - 1:
+        while abs(arr[right - 2] - arr[right - 1]) == 1:
             right -= 1
     
     return arr, res, len(res)
@@ -62,7 +62,6 @@ def prefix_reversal_tritonic(arr: list):
     if not arr:
         return 
     res = []
-
     n = len(arr)
     a = 0
     while a + 1 < n and arr[a] < arr[a + 1]:
@@ -76,7 +75,7 @@ def prefix_reversal_tritonic(arr: list):
     while p < n:
         greed = p
         # greedy search for a sorted part
-        while greed + 1 < n and abs(arr[greed] - arr[greed + 1]) == 1:
+        while greed + 1 < b and abs(arr[greed] - arr[greed + 1]) == 1:
             greed += 1 
         arr[: greed + 1] = arr[: greed + 1][::-1]
         res.append(greed)
@@ -87,7 +86,6 @@ def prefix_reversal_tritonic(arr: list):
                 arr[: q + 1] = arr[: q + 1][::-1]
                 res.append(q)
             while q + 1 < n and arr[greed - p] >= arr[q + 1]:
-                # to avoid the accident when arr[b] == 1
                 # if it is the min value, it may over the boundary
                 if p <= b and q == b:
                     break
@@ -102,7 +100,6 @@ def prefix_reversal_tritonic(arr: list):
                 arr[: q + 1] = arr[: q + 1][::-1]
                 res.append(q)
             while q + 1 < n and arr[greed - p] < arr[q + 1]:
-                # to avoid the accident when arr[b] == 1
                 # if it is the min value, it may over the boundary
                 if p <= b and q == b:
                     break
@@ -123,13 +120,7 @@ def prefix_reversal_tritonic(arr: list):
         arr[:] = arr[:][::-1]
         res.append(n - 1)
 
-    def is_sorted(arr):
-        for i in range(len(arr) - 1):
-            if arr[i] > arr[i + 1]:
-                print(arr[i], arr[i + 1])
-                return False
-        return True
-    return arr, res, len(res), is_sorted(arr)
+    return arr, res
 
 
 def prefix_reversal_binary(arr: list):
@@ -331,7 +322,7 @@ def prefix_reversal_ternary(arr: list):
             arr = arr[:][:: -1]
             res.append(n - 1)
 
-    return res
+    return arr, res
 
 
 if __name__  == "__main__":
@@ -340,7 +331,8 @@ if __name__  == "__main__":
 
     # arr = [1, 2, 3, 10, 14, 15, 17, 19, 20, 27, 28, 30, 31, 33, 35, 38, 40, 41, 44, 45, 46, 47, 49, 50, 48, 43, 42, 37, 36, 34, 32, 29, 25, 24, 23, 21, 18, 16, 13, 11, 9, 8, 6, 5, 4, 7, 12, 22, 26, 39]
     # arr =  [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 18, 20, 21, 22, 23, 24, 26, 27, 28, 29, 30, 31, 32, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 48, 49, 50, 34, 16, 2, 13, 14, 17, 19, 25, 33, 46, 47]
-    arr = [3, 4, 18, 24, 40, 42, 45, 50, 49, 48, 47, 46, 44, 43, 41, 39, 37, 36, 35, 34, 33, 31, 30, 29, 28, 27, 26, 25, 23, 22, 20, 19, 17, 16, 15, 14, 13, 11, 10, 9, 8, 7, 6, 5, 2, 1, 12, 21, 32, 38]
+    arr = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 35, 36, 37, 38, 39, 40, 42, 45, 46, 47, 48, 49, 44, 41, 21, 16, 1, 2, 3, 22, 23, 34, 43, 50]
+    # arr = [6, 19, 35, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50]
     print(prefix_reversal_tritonic(arr))
     
     # arr = [0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0]
