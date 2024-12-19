@@ -75,8 +75,12 @@ def prefix_reversal_tritonic(arr: list):
     while p < n:
         greed = p
         # greedy search for a sorted part
-        while greed + 1 < b and abs(arr[greed] - arr[greed + 1]) == 1:
-            greed += 1 
+        if p <= b:
+            while greed + 1 < b and abs(arr[greed] - arr[greed + 1]) == 1:
+                greed += 1
+        else:
+            while greed + 1 < n and abs(arr[greed] - arr[greed + 1]) == 1:
+                greed += 1
         arr[: greed + 1] = arr[: greed + 1][::-1]
         res.append(greed)
 
